@@ -1,30 +1,43 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { SignedIn, UserButton } from '@clerk/nextjs';
+import { usePathname } from 'next/navigation';
+//import { SignedIn, UserButton } from '@clerk/nextjs';
 
-import MobileNav from './MobileNav';
+//import MobileNav from './MobileNav';
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
-    <nav className="flex-between fixed z-50 w-full bg-dark-1 px-6 py-4 lg:px-10">
-      <Link href="/" className="flex items-center gap-1">
+    <nav className="flex-between fixed top-0 z-30 w-full bg-dark-2 px-6 py-3">
+      <div className="flex items-center gap-1">
         <Image
           src="/icons/logo.svg"
+          alt="logo"
           width={32}
           height={32}
-          alt="yoom logo"
           className="max-sm:size-10"
         />
         <p className="text-[26px] font-extrabold text-white max-sm:hidden">
-          YOOM
+          Video Call
         </p>
-      </Link>
-      <div className="flex-between gap-5">
-        <SignedIn>
-          <UserButton afterSignOutUrl="/sign-in" />
-        </SignedIn>
+      </div>
 
-        <MobileNav />
+      <div className="flex items-center gap-5">
+        <Link
+          href="/profile"
+          className="flex items-center gap-2"
+        >
+          <Image
+            src="/icons/profile.svg"
+            alt="profile"
+            width={24}
+            height={24}
+          />
+          <p className="text-white max-sm:hidden">Profile</p>
+        </Link>
       </div>
     </nav>
   );
