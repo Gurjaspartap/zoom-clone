@@ -1,3 +1,4 @@
+import Card from "@/components/Card";
 import Image from "next/image";
 
 export default function Home() {
@@ -14,11 +15,7 @@ export default function Home() {
 
       {/* Main Actions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-orange-500 rounded-xl p-6 flex flex-col gap-2 shadow-lg">
-          <span className="text-2xl text-white font-bold">+</span>
-          <span className="text-lg text-white font-semibold">New Meeting</span>
-          <span className="text-sm text-white/80">Setup a new recording</span>
-        </div>
+      <Card/>
         <div className="bg-blue-500 rounded-xl p-6 flex flex-col gap-2 shadow-lg">
           <span className="text-2xl text-white font-bold">🔗</span>
           <span className="text-lg text-white font-semibold">Join Meeting</span>
