@@ -1,36 +1,38 @@
-import Card from "@/components/Card";
+import HomeCard from "@/components/HomeCard";
+import Header from "@/components/HomePage/Header";
 import Image from "next/image";
-
 export default function Home() {
+ 
   return (
-    <div className="flex flex-col gap-8 p-8 pt-0">
-      {/* Header */}
-      <div className="flex flex-col gap-2 mt-8">
-        <h1 className="text-4xl font-bold text-white">12:04 <span className="text-lg font-normal">PM</span></h1>
-        <p className="text-lg text-gray-300">Friday, 29 March 2024</p>
-        <div className="mt-2 bg-dark-2 rounded-lg p-4 flex items-center gap-4">
-          <span className="text-sm text-gray-400">Upcoming Meeting at: 12:30 PM</span>
-        </div>
-      </div>
+    <div className="flex flex-col gap-8 p-8 pt-0 bg-black">
+    <Header/>
 
       {/* Main Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-      <Card/>
-        <div className="bg-blue-500 rounded-xl p-6 flex flex-col gap-2 shadow-lg">
-          <span className="text-2xl text-white font-bold">🔗</span>
-          <span className="text-lg text-white font-semibold">Join Meeting</span>
-          <span className="text-sm text-white/80">via invitation link</span>
-        </div>
-        <div className="bg-purple-600 rounded-xl p-6 flex flex-col gap-2 shadow-lg">
-          <span className="text-2xl text-white font-bold">📅</span>
-          <span className="text-lg text-white font-semibold">Schedule Meeting</span>
-          <span className="text-sm text-white/80">Plan your meeting</span>
-        </div>
-        <div className="bg-yellow-400 rounded-xl p-6 flex flex-col gap-2 shadow-lg">
-          <span className="text-2xl text-white font-bold">🎥</span>
-          <span className="text-lg text-white font-semibold">View Recordings</span>
-          <span className="text-sm text-white/80">Meeting recordings</span>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2  lg:px-40">
+        <HomeCard
+          className="bg-blue-500"
+          img="/icons/add-meeting.svg"
+          title="New Meeting"
+          description="Setup a new recording"
+        />
+        <HomeCard
+          className="bg-green-500"
+          img="/icons/join-meeting.svg"
+          title="Join Meeting"
+          description="via invitation link"
+        />
+        <HomeCard
+          className="bg-purple-600"
+          img="/icons/schedule-meeting.svg"
+          title="Schedule Meeting"
+          description="Plan your meeting"
+        />
+        <HomeCard
+          className="bg-yellow-400"
+          img="/icons/view-recordings.svg"
+          title="View Recordings"
+          description="Meeting recordings"
+        />
       </div>
 
       {/* Upcoming Meetings */}

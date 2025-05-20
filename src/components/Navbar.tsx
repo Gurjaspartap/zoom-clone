@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -9,9 +10,29 @@ import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const pathname = usePathname();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const avatarRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (avatarRef.current && !(avatarRef.current as any).contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   return (
-    <nav className="flex-between fixed top-0 z-30 w-full bg-dark-2 px-6 py-3">
+    <nav className="flex items-center justify-between z-30 w-full bg-dark-2 px-6 py-3 bg-[#1C1F2E]">
+      {/* Left: Logo and App Name */}
       <div className="flex items-center gap-1">
         <Image
           src="/icons/logo.svg"
@@ -24,20 +45,25 @@ const Navbar = () => {
           Video Call
         </p>
       </div>
-
-      <div className="flex items-center gap-5">
-        <Link
-          href="/profile"
-          className="flex items-center gap-2"
-        >
+      {/* Right: Avatar */}
+      <div className="relative" ref={avatarRef}>
+        <button onClick={() => setDropdownOpen((open) => !open)}>
           <Image
-            src="/icons/profile.svg"
-            alt="profile"
-            width={24}
-            height={24}
+            src="/images/avatar-1.jpeg"
+            alt="avatar"
+            width={40}
+            height={40}
+            className="rounded-full border-2 border-white"
           />
-          <p className="text-white max-sm:hidden">Profile</p>
-        </Link>
+        </button>
+        {dropdownOpen && (
+          <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50">
+            <Link href="/profile">
+              <span className="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Profile</span>
+            </Link>
+            <button className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Logout</button>
+          </div>
+        )}
       </div>
     </nav>
   );
