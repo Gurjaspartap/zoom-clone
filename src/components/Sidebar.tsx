@@ -14,6 +14,9 @@ const Sidebar = () => {
       <div className="flex flex-1 flex-col gap-6">
         {sidebarLinks.map((item) => {
           const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`);
+          console.log('Current pathname:', pathname);
+          console.log('Item route:', item.route);
+          console.log('Is active:', isActive);
           
           return (
             <Link
@@ -22,7 +25,7 @@ const Sidebar = () => {
               className={cn(
                 'flex gap-4 items-center p-4 rounded-lg justify-start transition-all hover:bg-blue-1/50',
                 {
-                  'bg-blue-1': isActive,
+                  'bg-[#0E78F9]': isActive,
                 }
               )}
             >
