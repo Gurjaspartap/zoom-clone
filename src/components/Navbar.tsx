@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-//import { SignedIn, UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from '@clerk/nextjs';
 
 //import MobileNav from './MobileNav';
 
@@ -45,25 +45,24 @@ const Navbar = () => {
           Video Call
         </p>
       </div>
-      {/* Right: Avatar */}
-      <div className="relative" ref={avatarRef}>
-        <button onClick={() => setDropdownOpen((open) => !open)}>
-          <Image
-            src="/images/avatar-1.jpeg"
-            alt="avatar"
-            width={40}
-            height={40}
-            className="rounded-full border-2 border-white"
-          />
-        </button>
-        {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg py-2 z-50">
-            <Link href="/profile">
-              <span className="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Profile</span>
-            </Link>
-            <button className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">Logout</button>
-          </div>
-        )}
+      
+      {/* Right: Auth Buttons */}
+      <div className="flex items-center gap-4">
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="text-white bg-blue-1 hover:bg-blue-1/80 px-4 py-2 rounded-lg">
+              Sign In
+            </button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <button className="text-white bg-blue-1 hover:bg-blue-1/80 px-4 py-2 rounded-lg">
+              Sign Up
+            </button>
+          </SignUpButton>
+        </SignedOut>
       </div>
     </nav>
   );
