@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
+import StreamClientProvide from "../../providers/StreamClientProvide";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,20 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-dark-1`}>
-        <div className="flex h-screen">
-          <Sidebar />
-          <div className="flex-1 flex flex-col">
-            <Navbar />
-            <main className="flex-1 overflow-y-auto">
-              {children}
-            </main>
-          </div>
-        </div>
+        <ClerkProvider>
+          <StreamClientProvide>
+            <div className="flex h-screen">
+              <Sidebar />
+              <div className="flex-1 flex flex-col">
+                <Navbar />
+                <main className="flex-1 overflow-y-auto">
+                  {children}
+                </main>
+              </div>
+            </div>
+          </StreamClientProvide>
+        </ClerkProvider>
       </body>
     </html>
-    </ClerkProvider>
   );
 }
