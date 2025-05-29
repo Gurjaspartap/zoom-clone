@@ -3,16 +3,56 @@ import HomeCard from "@/components/HomeCard";
 import Header from "@/components/HomePage/Header";
 import MeetingModal from "@/components/MeetingModal";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { useUser } from "@clerk/nextjs";
+import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { start } from "repl";
 
 export default function Home() {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [meetingState, setMeetingState] = useState<'isScheduleMeeting' | 'isJoiningMeeting' | 'isInstantMeeting' | undefined>();
+  const {user} = useUser();
+  const client = useStreamVideoClient();
+  const [values,setValues] = useState({
+    dateTime: new Date(),
+    description: '',
+    link: ''
+  })
+  const [callDetails,setCallDetails]= useState<Call>()
 
-  const createMeeting = () => {
-    // Handle meeting creation logic here
-    console.log("Creating meeting...");
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const createMeeting = async() => {
+    if(!client || !user) return;
+    try {
+      const id = crypto.randomUUID();
+      const call =client.call('default', id);
+      if(!call) throw new Error('Failed to create call');
+      const startsAt = values.dateTime.toISOString() || new Date().toISOString();
+      const description = values.description || 'Instant Meeting';
+      await call.getOrCreate({
+        data:{
+          starts_at :startsAt,
+         custom :{
+          description
+         }
+        }
+      })
+      setCallDetails(call);
+      if(!values.description){
+        router.push(`/meeting/${call.id}`);
+      }
+    } catch (error) {
+      console.log("Error creating meeting", error);
+    }
   };
 
   const joinMeeting = () => {
