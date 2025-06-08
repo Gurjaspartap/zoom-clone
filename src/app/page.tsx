@@ -21,6 +21,7 @@ export default function Home() {
     link: ''
   })
   const [callDetails,setCallDetails]= useState<Call>()
+  const [meetingId, setMeetingId] = useState('');
 
   useEffect(() => {
     setMounted(true);
@@ -56,8 +57,16 @@ export default function Home() {
   };
 
   const joinMeeting = () => {
-    // Handle joining meeting logic here
-    console.log("Joining meeting...");
+    if (!meetingId) return;
+    
+    try {
+      if (!meetingId) throw new Error('Invalid meeting link');
+      
+      // Navigate to the meeting page
+      router.push(`/meeting/${meetingId}`);
+    } catch (error) {
+      console.log("Error joining meeting:", error);
+    }
   };
 
   return (
@@ -118,6 +127,8 @@ export default function Home() {
           <Input
             placeholder="Enter meeting link"
             className="bg-dark-3 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            value={meetingId}
+            onChange={(e) => setMeetingId(e.target.value)}
           />
         </div>
       </MeetingModal>
