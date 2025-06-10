@@ -32,7 +32,7 @@ export const StreamClientProvide = ({ children }: { children: React.ReactNode })
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-dark-1">
-        <h1 className="text-2xl font-bold text-white mb-4">Please sign in to continue</h1>
+        <h1 className="text-2xl font-bold  mb-4">Please sign in to continue</h1>
         <SignInButton mode="modal">
           <button className="bg-blue-1 hover:bg-blue-1/80 text-white px-4 py-2 rounded-lg">
             Sign In
